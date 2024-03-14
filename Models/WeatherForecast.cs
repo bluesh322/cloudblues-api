@@ -1,4 +1,4 @@
-namespace cloudblues_api.DTOs
+namespace cloudblues_api.Models
 {
     public class WeatherForecast
     {

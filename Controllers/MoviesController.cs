@@ -10,14 +10,14 @@ namespace cloudblues_api.Controllers
     [ApiController]
     public class MoviesController : ControllerBase
     {
-        private readonly MovieContext _dbContext;
+        private readonly pgContext _dbContext;
 
-        public MoviesController(MovieContext dbContext)
+        public MoviesController(pgContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        //GET: api/Movies
+        // GET: api/Movies
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Movie>>> GetMovies()
         {
@@ -28,7 +28,7 @@ namespace cloudblues_api.Controllers
             return await _dbContext.Movies.ToListAsync();
         }
 
-        //GET: api/Movies/5
+        // GET: api/Movies/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Movie>> GetMovie(int id)
         {
@@ -46,7 +46,7 @@ namespace cloudblues_api.Controllers
             return movie;
         }
 
-        //POST: api/Movies
+        // POST: api/Movies
         [HttpPost]
         public async Task<ActionResult<Movie>> PostMovie(Movie movie)
         {
@@ -56,7 +56,7 @@ namespace cloudblues_api.Controllers
             return CreatedAtAction(nameof(GetMovie), new { id = movie.Id }, movie);
         }
 
-        //PUT: api/Movies/5
+        // PUT: api/Movies/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMovie(int id, Movie movie)
         {
@@ -86,7 +86,27 @@ namespace cloudblues_api.Controllers
             return NoContent();
         }
 
-        
+        // DELETE: api/Movies/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteMovie(int id)
+        {
+            if (_dbContext.Movies == null)
+            {
+                return NotFound();
+            }
+
+            var movie = await _dbContext.Movies.FindAsync(id);
+            if (movie == null)
+            {
+                return NotFound();
+            }
+
+            _dbContext.Movies.Remove(movie);
+            await _dbContext.SaveChangesAsync();
+
+            return NoContent();
+        }
+
         private bool MovieExists(long id)
         {
             return (_dbContext.Movies?.Any(e => e.Id == id)).GetValueOrDefault();

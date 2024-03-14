@@ -1,5 +1,5 @@
-﻿using cloudblues_api.DTOs;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using cloudblues_api.Models;
 
 namespace cloudblues_api.Controllers
 {
