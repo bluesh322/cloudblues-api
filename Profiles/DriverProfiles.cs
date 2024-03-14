@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using cloudblues_api.Models.DTOs.Incoming;
 using cloudblues_api.Models;
+using cloudblues_api.Models.DTOs.Outgoing;
 
 namespace cloudblues_api.Profiles
 {
@@ -30,6 +31,20 @@ namespace cloudblues_api.Profiles
                 .ForMember(
                     dest => dest.DateUpdated,
                     opt => opt.MapFrom(src => DateTime.Now));
+
+            CreateMap<Driver, DriverDto>()
+                .ForMember(
+                    dest => dest.FullName,
+                    opt => opt.MapFrom(x => $"{x.FirstName} {x.LastName}"))
+                .ForMember(
+                    dest => dest.Id,
+                    opt => opt.MapFrom(x => x.Id))
+                .ForMember(
+                    dest => dest.DriverNumber,
+                    opt => opt.MapFrom(x => x.DriverNumber))
+                .ForMember(
+                    dest => dest.WorldChampionships,
+                    opt => opt.MapFrom(x => x.WorldChampionships));
         }
     }
 }

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -31,13 +31,21 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="Models\DTOs\Outgoing\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="Models\DTOs\Outgoing\**" />
+    <EmbeddedResource Remove="Models\DTOs\Outgoing\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="Models\DTOs\Outgoing\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="ClientApp\src\components\Counter\numberInputSlice.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Models\DTOs\Outgoing\DriverDto.cs" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

@@ -1,4 +1,4 @@
-namespace MapperApp.Models.DTOs.Incoming;
+namespace cloudblues_api.Models.DTOs.Incoming;
 
 public class DriverCreateDto
 {
@@ -6,7 +6,7 @@ public class DriverCreateDto
 
     public string? LastName { get; set; }
 
-    public int DriverNumber {  get; set; }
+    public int DriverNumber { get; set; }
 
     public int WorldChampionships { get; set; }
 }
