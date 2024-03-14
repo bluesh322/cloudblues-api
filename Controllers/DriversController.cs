@@ -1,4 +1,7 @@
-﻿using cloudblues_api.Models;
+﻿using AutoMapper;
+using cloudblues_api.Models;
+using cloudblues_api.Models.DTOs.Incoming;
+using cloudblues_api.Models.DTOs.Outgoing;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cloudblues_api.Controllers
@@ -10,11 +13,13 @@ namespace cloudblues_api.Controllers
         private readonly pgContext _dbContext;
         private readonly ILogger<DriversController> _logger;
         private static List<Driver> drivers = new List<Driver>();
+        private readonly IMapper _mapper;
 
-        public DriversController(pgContext dbContext, ILogger<DriversController> logger)
+        public DriversController(pgContext dbContext, ILogger<DriversController> logger, IMapper mapper)
         {
             _dbContext = dbContext;
             _logger = logger;
+            _mapper = mapper;
         }        
 
         // GET all drivers
@@ -22,7 +27,25 @@ namespace cloudblues_api.Controllers
         public IActionResult GetDriver()
         {
             var allDrivers = drivers.Where(x => x.Status == 1).ToList();
-            return Ok(allDrivers);
+
+            var _drivers = _mapper.Map<IEnumerable<DriverDto>>(allDrivers);
+            return Ok(_drivers);
+        }
+
+        [HttpPost]
+        public IActionResult CreateDriver(DriverCreateDto data)
+        {
+            if (ModelState.IsValid)
+            {
+                var _driver = _mapper.Map<Driver>(data);
+
+                drivers.Add(_driver);
+
+                var newDriver = _mapper.Map<DriverDto>(_driver);
+                return CreatedAtAction("GetDriver", new { _driver.Id }, newDriver);
+            }
+
+            return NoContent();
         }
 
         [HttpGet("{id}")]
@@ -36,18 +59,6 @@ namespace cloudblues_api.Controllers
             }
 
             return Ok(item);
-        }
-
-        [HttpPost]
-        public IActionResult CreateDriver(Driver data)
-        {
-            if (ModelState.IsValid)
-            {
-                drivers.Add(data);
-                return CreatedAtAction("GetDriver", new { data.Id });
-            }
-
-            return NoContent();
         }
 
         [HttpPut("{id}")]
