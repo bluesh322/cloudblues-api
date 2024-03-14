@@ -85,6 +85,8 @@ namespace cloudblues_api.Controllers
 
             return NoContent();
         }
+
+        
         private bool MovieExists(long id)
         {
             return (_dbContext.Movies?.Any(e => e.Id == id)).GetValueOrDefault();
