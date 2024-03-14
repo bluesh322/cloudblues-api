@@ -25,6 +25,7 @@ namespace cloudblues_api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "cloudblues_api", Version = "v1" });
             });
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
