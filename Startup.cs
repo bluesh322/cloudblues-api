@@ -19,8 +19,8 @@ namespace cloudblues_api
             services.AddAuthentication();
             services.AddAuthorization();
             services.AddEndpointsApiExplorer();
-            services.AddDbContext<MovieContext>(options =>
-                    options.UseNpgsql(Configuration.GetConnectionString("MovieContext"))); 
+            services.AddDbContext<pgContext>(options =>
+                    options.UseNpgsql(Configuration.GetConnectionString("pgContext"))); 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "cloudblues_api", Version = "v1" });

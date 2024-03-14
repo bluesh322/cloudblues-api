@@ -2,15 +2,16 @@
 
 namespace cloudblues_api.Models
 {
-    public class MovieContext : DbContext
+    public class pgContext : DbContext
     {
-        public MovieContext(DbContextOptions<MovieContext> options) : base(options)
+        public pgContext(DbContextOptions<pgContext> options) : base(options)
         {
 
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseNpgsql("Host=localhost;Database=postgres;Username=postgres;Password=root");
-    public DbSet<Movie> Movies { get; set; } = null!;
+        public DbSet<Movie> Movies { get; set; } = null!;
+        public DbSet<Driver> Drivers { get; set; } = null!;
     }
 }
