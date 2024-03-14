@@ -1,4 +1,5 @@
 ﻿using cloudblues_api.Models;
+using MapperApp.Models.DTOs.Incoming;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cloudblues_api.Controllers
@@ -39,12 +40,24 @@ namespace cloudblues_api.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateDriver(Driver data)
+        public IActionResult CreateDriver(DriverCreateDto data)
         {
             if (ModelState.IsValid)
             {
-                drivers.Add(data);
-                return CreatedAtAction("GetDriver", new { data.Id });
+                var _driver = new Driver()
+                {
+                    Id = Guid.NewGuid(),
+                    Status = 1,
+                    DateAdded = DateTime.Now,
+                    DateUpdated = DateTime.Now,
+                    DriverNumber = data.DriverNumber,
+                    FirstName = data.FirstName,
+                    LastName = data.LastName,
+                    WorldChampionships = data.WorldChampionships,
+                };
+
+                drivers.Add(_driver);
+                return CreatedAtAction("GetDriver", new { _driver.Id });
             }
 
             return NoContent();
