@@ -14,7 +14,12 @@ const AppRoutes = [
   {
     path: '/fetch-data',
     element: <FetchData />
-  }
+  },
+    {
+        path: '/driver',
+        element: <Driver />
+    }
+
 ];
 
 export default AppRoutes;
